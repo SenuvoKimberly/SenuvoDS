@@ -10,6 +10,11 @@ using DirectScale.Disco.Extension.Hooks.Commissions;
 using DirectScale.Disco.Extension.Hooks;
 using DirectScale.Disco.Extension.Hooks.Autoships;
 using DirectScale.Disco.Extension.Hooks.Orders;
+using senuvo.Merchants.Ewallet.Interfaces;
+using senuvo.Services.HttpClientService;
+using senuvo.Merchants.Ewallet.Ewallet;
+using senuvo.Hooks;
+using Hooks;
 
 namespace senuvo
 {
@@ -26,17 +31,21 @@ namespace senuvo
         }
         private void RegisterMerchants(IServiceCollection services)
         {
+            services.AddSingleton<ICommissionMerchant, EwalletMoneyOutMerchant>();
             services.AddScoped<IMoneyInMerchant, ALIPAY>();
             services.AddScoped<IMoneyInMerchant, WECHAT>();
         }
         private void RegisterServices(IServiceCollection services)
         {
             services.AddScoped<IsenuvoService, senuvoService>();
+            services.AddScoped<IEwalletRepository, EwalletRepository>();
+            services.AddScoped<IEwalletService, EwalletService>();
+            services.AddSingleton<IHttpClientService, HttpClientService>();
         }
         private void RegisterHooks(IServiceCollection services)
         {
-            services.AddScoped<Hooks.IDaily, Hooks.Daily>();
-            services.AddScoped<IHook<DailyRunHookRequest, DailyRunHookResponse>, Hooks.Daily>();
+            services.AddScoped<IDaily, Daily>();
+            services.AddScoped<IHook<DailyRunHookRequest, DailyRunHookResponse>, Daily>();
 
         }
         private void RegisterApis(IServiceCollection services)
