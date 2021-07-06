@@ -38,9 +38,9 @@ namespace senuvo
         private void RegisterServices(IServiceCollection services)
         {
             services.AddScoped<IsenuvoService, senuvoService>();
+            services.AddScoped<IHttpClientService, HttpClientService>();
             services.AddScoped<IEwalletRepository, EwalletRepository>();
             services.AddScoped<IEwalletService, EwalletService>();
-            services.AddSingleton<IHttpClientService, HttpClientService>();
         }
         private void RegisterHooks(IServiceCollection services)
         {
