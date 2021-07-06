@@ -13,7 +13,6 @@ using DirectScale.Disco.Extension.Hooks.Orders;
 using senuvo.Merchants.Ewallet.Interfaces;
 using senuvo.Services.HttpClientService;
 using senuvo.Merchants.Ewallet.Ewallet;
-using senuvo.Hooks;
 using Hooks;
 
 namespace senuvo
@@ -31,16 +30,16 @@ namespace senuvo
         }
         private void RegisterMerchants(IServiceCollection services)
         {
-            services.AddSingleton<ICommissionMerchant, EwalletMoneyOutMerchant>();
             services.AddScoped<IMoneyInMerchant, ALIPAY>();
             services.AddScoped<IMoneyInMerchant, WECHAT>();
+            services.AddScoped<ICommissionMerchant, EwalletMoneyOutMerchant>();
         }
         private void RegisterServices(IServiceCollection services)
         {
             services.AddScoped<IsenuvoService, senuvoService>();
-            services.AddScoped<IHttpClientService, HttpClientService>();
             services.AddScoped<IEwalletRepository, EwalletRepository>();
             services.AddScoped<IEwalletService, EwalletService>();
+            services.AddSingleton<IHttpClientService, HttpClientService>();
         }
         private void RegisterHooks(IServiceCollection services)
         {
